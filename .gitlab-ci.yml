@@ -1,0 +1,46 @@
+include:
+  - project: 'devops/ci-common'
+    ref: production
+    file:
+      - '/gitlab-pipe/extends.yml'
+
+variables:
+  IMAGE: $CI_REGISTRY/$CI_PROJECT_PATH/$CI_COMMIT_REF_NAME:$CI_PIPELINE_ID
+
+stages:
+  - build
+  - test
+  - deploy
+
+build:
+  stage: build
+  variables:
+    CI_BUILD_NAME1: $IMAGE
+  script:
+    - !reference [.easy-build-image-template, script]
+
+deploy:
+  stage: deploy
+  variables:
+    CI_DEPLOY_IMAGE1: $IMAGE
+    GIT_STRATEGY: none
+  only:
+    - production
+  script:
+    - !reference [.easy-deploy-template, script]
+
+test:lint:
+  image: node:gallium
+  stage: test
+  script:
+    - yarn
+    - '[ -f node_modules/.bin/eslint ] || yarn'
+    - yarn lint
+
+test:jest:
+  image: node:gallium
+  stage: test
+  script:
+    - yarn
+    - '[ -f node_modules/.bin/eslint ] || yarn'
+    - yarn test

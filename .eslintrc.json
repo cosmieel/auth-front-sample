@@ -1,0 +1,42 @@
+{
+    "env": {
+        "jest": true
+    },
+    "extends": [
+        "./node_modules/frontend-cs/.eslintrc.json",
+        "plugin:vue/recommended",
+        "@regru/regru-light"
+    ],
+    "globals": {
+        "Site": true,
+        "lang": true,
+        "ru": true,
+        "en": true,
+        "_": true,
+        "t": true,
+        "t_or_undef": true,
+        "t_or_default": true,
+        "locale": true
+    },
+    "rules": {
+        "quote-props": [
+            1,
+            "consistent"
+        ],
+        "vue/html-indent": [
+            "error",
+            4
+        ],
+        "vue/html-self-closing": [0],
+        "vue/custom-event-name-casing": ["warn"],
+        "vue/multiline-html-element-content-newline": ["off"],
+        "shopify/jquery-dollar-sign-reference": ["off"],
+        "comma-dangle": ["error", {
+            "arrays": "always-multiline",
+            "objects": "always-multiline",
+            "imports": "always-multiline",
+            "exports": "always-multiline",
+            "functions": "only-multiline"
+        }]
+    }
+}
